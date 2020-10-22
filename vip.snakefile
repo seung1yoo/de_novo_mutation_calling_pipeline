@@ -5,7 +5,7 @@ import yaml
 
 configfile: "config.yaml"
 
-wkdir = "/data06/project/VIP_RNASeq_20200529"
+wkdir = "/BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline"
 samples = ['AKTPF_hez_Acv1','AKTPF_hez_Acv2','AKTPF_hez_Acv3',
            'AKTPF_hez_control1','AKTPF_hez_control2','AKTPF_hez_control3',
            'AKTPF_LOH_Acv1','AKTPF_LOH_Acv2','AKTPF_LOH_Acv3',

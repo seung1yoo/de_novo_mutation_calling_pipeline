@@ -7,12 +7,11 @@
         "output" : "logs/{rule}.{wildcards.sample}.stdout",
         "error"  : "logs/{rule}.{wildcards.sample}.stderr"
     },
-    "run_fastqc": {
+    "prep_bwa_index": {
         "time": "4:00:00",
-        "threads": "4"
-    },
-    "run_cutadapt": {
-        "time": "4:00:00",
-        "threads": "4"
+        "threads": "1",
+        "jobName": "{rule}",
+        "output" : "logs/{rule}.stdout",
+        "error"  : "logs/{rule}.stderr"
     }
 }
