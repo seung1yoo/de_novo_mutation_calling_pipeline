@@ -1,0 +1,48 @@
+
+samples:
+  AKTPF_hez_Acv1:
+    fastq_1: rawdata/AKTPF_hez_Acv1.fastq.gz
+  AKTPF_hez_Acv2:
+    fastq_1: rawdata/AKTPF_hez_Acv2.fastq.gz
+  AKTPF_hez_Acv3:
+    fastq_1: rawdata/AKTPF_hez_Acv3.fastq.gz
+  AKTPF_hez_control1:
+    fastq_1: rawdata/AKTPF_hez_control1.fastq.gz
+  AKTPF_hez_control2:
+    fastq_1: rawdata/AKTPF_hez_control2.fastq.gz
+  AKTPF_hez_control3:
+    fastq_1: rawdata/AKTPF_hez_control3.fastq.gz
+  AKTPF_LOH_Acv1:
+    fastq_1: rawdata/AKTPF_LOH_Acv1.fastq.gz
+  AKTPF_LOH_Acv2:
+    fastq_1: rawdata/AKTPF_LOH_Acv2.fastq.gz
+  AKTPF_LOH_Acv3:
+    fastq_1: rawdata/AKTPF_LOH_Acv3.fastq.gz
+  AKTPF_LOH_control1:
+    fastq_1: rawdata/AKTPF_LOH_control1.fastq.gz
+  AKTPF_LOH_control2:
+    fastq_1: rawdata/AKTPF_LOH_control2.fastq.gz
+  AKTPF_LOH_control3:
+    fastq_1: rawdata/AKTPF_LOH_control3.fastq.gz
+
+comps:
+  DEG01:
+    ctrl: AKTPF_LOH_Acv1,AKTPF_LOH_Acv2,AKTPF_LOH_Acv3
+    ctrl_label: AKTPF_LOH_Acv
+    case: AKTPF_hez_Acv1,AKTPF_hez_Acv2,AKTPF_hez_Acv3
+    case_label: AKTPF_hez_Acv
+  DEG02:
+    ctrl: AKTPF_LOH_control1,AKTPF_LOH_control2,AKTPF_LOH_control3
+    ctrl_label: AKTPF_LOH_control
+    case: AKTPF_hez_control1,AKTPF_hez_control2,AKTPF_hez_control3
+    case_label: AKTPF_hez_control
+  DEG03:
+    ctrl: AKTPF_LOH_control1,AKTPF_LOH_control2,AKTPF_LOH_control3
+    ctrl_label: AKTPF_LOH_control
+    case: AKTPF_LOH_Acv1,AKTPF_LOH_Acv2,AKTPF_LOH_Acv3
+    case_label: AKTPF_LOH_Acv
+  DEG04:
+    ctrl: AKTPF_hez_control1,AKTPF_hez_control2,AKTPF_hez_control3
+    ctrl_label: AKTPF_hez_control
+    case: AKTPF_hez_Acv1,AKTPF_hez_Acv2,AKTPF_hez_Acv3
+    case_label: AKTPF_hez_Acv

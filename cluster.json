@@ -1,0 +1,18 @@
+{
+    "__default__": {
+        "time": "12:00:00",
+        "threads": "1",
+        "mem": "30",
+        "jobName": "{rule}.{wildcards.sample}",
+        "output" : "logs/{rule}.{wildcards.sample}.stdout",
+        "error"  : "logs/{rule}.{wildcards.sample}.stderr"
+    },
+    "run_fastqc": {
+        "time": "4:00:00",
+        "threads": "4"
+    },
+    "run_cutadapt": {
+        "time": "4:00:00",
+        "threads": "4"
+    }
+}
