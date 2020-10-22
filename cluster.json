@@ -7,11 +7,41 @@
         "output" : "logs/{rule}.{wildcards.sample}.stdout",
         "error"  : "logs/{rule}.{wildcards.sample}.stderr"
     },
-    "prep_bwa_index": {
+    "prep_ref_genome_bwa_index": {
         "time": "4:00:00",
         "threads": "1",
         "jobName": "{rule}",
         "output" : "logs/{rule}.stdout",
         "error"  : "logs/{rule}.stderr"
+    },
+    "prep_ref_genome_fai": {
+        "time": "4:00:00",
+        "threads": "1",
+        "jobName": "{rule}",
+        "output" : "logs/{rule}.stdout",
+        "error"  : "logs/{rule}.stderr"
+    },
+    "prep_ref_genome_dict": {
+        "time": "4:00:00",
+        "threads": "1",
+        "jobName": "{rule}",
+        "output" : "logs/{rule}.stdout",
+        "error"  : "logs/{rule}.stderr"
+    },
+    "run_fastqc": {
+        "time": "4:00:00",
+        "threads": "8"
+    },
+    "run_fastq_raw_stats": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_sickle": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_fastq_clean_stats": {
+        "time": "4:00:00",
+        "threads": "1"
     }
 }

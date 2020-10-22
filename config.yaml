@@ -6,30 +6,15 @@ reference:
 
 
 samples:
-  AKTPF_hez_Acv1:
-    fastq_1: rawdata/AKTPF_hez_Acv1.fastq.gz
-  AKTPF_hez_Acv2:
-    fastq_1: rawdata/AKTPF_hez_Acv2.fastq.gz
-  AKTPF_hez_Acv3:
-    fastq_1: rawdata/AKTPF_hez_Acv3.fastq.gz
-  AKTPF_hez_control1:
-    fastq_1: rawdata/AKTPF_hez_control1.fastq.gz
-  AKTPF_hez_control2:
-    fastq_1: rawdata/AKTPF_hez_control2.fastq.gz
-  AKTPF_hez_control3:
-    fastq_1: rawdata/AKTPF_hez_control3.fastq.gz
-  AKTPF_LOH_Acv1:
-    fastq_1: rawdata/AKTPF_LOH_Acv1.fastq.gz
-  AKTPF_LOH_Acv2:
-    fastq_1: rawdata/AKTPF_LOH_Acv2.fastq.gz
-  AKTPF_LOH_Acv3:
-    fastq_1: rawdata/AKTPF_LOH_Acv3.fastq.gz
-  AKTPF_LOH_control1:
-    fastq_1: rawdata/AKTPF_LOH_control1.fastq.gz
-  AKTPF_LOH_control2:
-    fastq_1: rawdata/AKTPF_LOH_control2.fastq.gz
-  AKTPF_LOH_control3:
-    fastq_1: rawdata/AKTPF_LOH_control3.fastq.gz
+  sample1:
+    fastq_1: rawdata/sample1_R1.fastq.gz
+    fastq_2: rawdata/sample1_R2.fastq.gz
+  sample2:
+    fastq_1: rawdata/sample2_R1.fastq.gz
+    fastq_2: rawdata/sample2_R2.fastq.gz
+  sample3:
+    fastq_1: rawdata/sample3_R1.fastq.gz
+    fastq_2: rawdata/sample3_R2.fastq.gz
 
 #comps:
 #  DEG01:
