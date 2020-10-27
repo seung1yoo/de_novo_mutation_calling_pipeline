@@ -1,12 +1,14 @@
 #!/usr/bin/python
 
 import os
+import sys
 import yaml
 
 configfile: "config.yaml"
 
 wkdir = "/BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline"
-samples = ['sample1','sample2','sample3']
+samples = [sample for sample in config['samples']]
+print(samples)
 
 def get_outputs(config, wkdir, samples):
     ls = list()
