@@ -4,36 +4,55 @@ reference:
   known_site_1: reference/Homo_sapiens_assembly38.dbsnp138.vcf
   known_site_2: Mills_and_1000G_gold_standard.indels.hg38.vcf
 
-
 samples:
-  sample1:
-    fastq_1: rawdata/sample1_R1.fastq.gz
-    fastq_2: rawdata/sample1_R2.fastq.gz
-  sample2:
-    fastq_1: rawdata/sample2_R1.fastq.gz
-    fastq_2: rawdata/sample2_R2.fastq.gz
-  sample3:
-    fastq_1: rawdata/sample3_R1.fastq.gz
-    fastq_2: rawdata/sample3_R2.fastq.gz
-
-#comps:
-#  DEG01:
-#    ctrl: AKTPF_LOH_Acv1,AKTPF_LOH_Acv2,AKTPF_LOH_Acv3
-#    ctrl_label: AKTPF_LOH_Acv
-#    case: AKTPF_hez_Acv1,AKTPF_hez_Acv2,AKTPF_hez_Acv3
-#    case_label: AKTPF_hez_Acv
-#  DEG02:
-#    ctrl: AKTPF_LOH_control1,AKTPF_LOH_control2,AKTPF_LOH_control3
-#    ctrl_label: AKTPF_LOH_control
-#    case: AKTPF_hez_control1,AKTPF_hez_control2,AKTPF_hez_control3
-#    case_label: AKTPF_hez_control
-#  DEG03:
-#    ctrl: AKTPF_LOH_control1,AKTPF_LOH_control2,AKTPF_LOH_control3
-#    ctrl_label: AKTPF_LOH_control
-#    case: AKTPF_LOH_Acv1,AKTPF_LOH_Acv2,AKTPF_LOH_Acv3
-#    case_label: AKTPF_LOH_Acv
-#  DEG04:
-#    ctrl: AKTPF_hez_control1,AKTPF_hez_control2,AKTPF_hez_control3
-#    ctrl_label: AKTPF_hez_control
-#    case: AKTPF_hez_Acv1,AKTPF_hez_Acv2,AKTPF_hez_Acv3
-#    case_label: AKTPF_hez_Acv
+  sample_K-ABC-00002:
+    fastq_1: rawdata/sample_K-ABC-00002_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00002_2.fq.gz
+  sample_K-ABC-00011:
+    fastq_1: rawdata/sample_K-ABC-00011_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00011_2.fq.gz
+  sample_K-ABC-00015:
+    fastq_1: rawdata/sample_K-ABC-00015_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00015_2.fq.gz
+  sample_K-ABC-00016:
+    fastq_1: rawdata/sample_K-ABC-00016_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00016_2.fq.gz
+  sample_K-ABC-00017:
+    fastq_1: rawdata/sample_K-ABC-00017_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00017_2.fq.gz
+  sample_K-ABC-00020:
+    fastq_1: rawdata/sample_K-ABC-00020_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00020_2.fq.gz
+  sample_K-ABC-00022:
+    fastq_1: rawdata/sample_K-ABC-00022_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00022_2.fq.gz
+  sample_K-ABC-00026:
+    fastq_1: rawdata/sample_K-ABC-00026_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00026_2.fq.gz
+  sample_K-ABC-00027:
+    fastq_1: rawdata/sample_K-ABC-00027_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00027_2.fq.gz
+  sample_K-ABC-00034:
+    fastq_1: rawdata/sample_K-ABC-00034_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00034_2.fq.gz
+  sample_K-ABC-00035:
+    fastq_1: rawdata/sample_K-ABC-00035_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00035_2.fq.gz
+  sample_K-ABC-00036:
+    fastq_1: rawdata/sample_K-ABC-00036_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00036_2.fq.gz
+  sample_K-ABC-00037:
+    fastq_1: rawdata/sample_K-ABC-00037_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00037_2.fq.gz
+  sample_K-ABC-00038:
+    fastq_1: rawdata/sample_K-ABC-00038_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00038_2.fq.gz
+  sample_K-ABC-00040:
+    fastq_1: rawdata/sample_K-ABC-00040_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00040_2.fq.gz
+  sample_K-ABC-00044:
+    fastq_1: rawdata/sample_K-ABC-00044_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00044_2.fq.gz
+  sample_K-ABC-00087:
+    fastq_1: rawdata/sample_K-ABC-00087_1.fq.gz
+    fastq_2: rawdata/sample_K-ABC-00087_2.fq.gz
