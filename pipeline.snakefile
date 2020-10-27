@@ -6,8 +6,6 @@ import yaml
 
 configfile: "config.yaml"
 print(config)
-workdir : "/BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline"
-#print(workdir)
 
 samples = [sample for sample in config['samples']]
 print(samples)
