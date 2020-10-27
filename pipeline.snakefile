@@ -6,14 +6,14 @@ import yaml
 
 configfile: "config.yaml"
 
-wkdir = "/BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline"
+workdir = "/BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline"
 samples = [sample for sample in config['samples']]
 print(samples)
 
 if not os.path.isdir('analysis'):
     os.mkdir('analysis')
 
-def get_outputs(config, wkdir, samples):
+def get_outputs(config, workdir, samples):
     ls = list()
     ls.append('{0}.amb'.format(config['reference']['genome_fasta']))
     ls.append('{0}.ann'.format(config['reference']['genome_fasta']))
@@ -37,7 +37,7 @@ def get_outputs(config, wkdir, samples):
     return ls
 
 rule all:
-    input: get_outputs(config, wkdir, samples)
+    input: get_outputs(config, workdir, samples)
 
 rule prep_ref_genome_bwa_index:
     input:
