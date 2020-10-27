@@ -24,8 +24,8 @@ def get_outputs(config, samples):
     ls.append('{0}.dict'.format(config['reference']['genome_fasta']))
 
     for sample in samples:
-        ls.append('analysis/fastqc/{0}/{0}_R1_fastqc.zip'.format(sample))
-        ls.append('analysis/fastqc/{0}/{0}_R2_fastqc.zip'.format(sample))
+        ls.append('analysis/fastqc/{0}/{0}_1_fastqc.zip'.format(sample))
+        ls.append('analysis/fastqc/{0}/{0}_2_fastqc.zip'.format(sample))
 
         ls.append('analysis/sickle/{0}/{0}_R1.fastq.gz'.format(sample))
         ls.append('analysis/sickle/{0}/{0}_R2.fastq.gz'.format(sample))
@@ -74,8 +74,8 @@ rule run_fastqc:
         fastq_1=lambda wildcards: config["samples"][wildcards.sample]["fastq_1"],
         fastq_2=lambda wildcards: config["samples"][wildcards.sample]["fastq_2"]
     output:
-        fastqc_1="analysis/fastqc/{sample}/{sample}_R1_fastqc.zip",
-        fastqc_2="analysis/fastqc/{sample}/{sample}_R2_fastqc.zip"
+        fastqc_1="analysis/fastqc/{sample}/{sample}_1_fastqc.zip",
+        fastqc_2="analysis/fastqc/{sample}/{sample}_2_fastqc.zip"
     wildcard_constraints:
         sample="[^/]+"
     params:
