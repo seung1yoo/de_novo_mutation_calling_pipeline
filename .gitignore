@@ -2,3 +2,4 @@ reference/
 rawdata
 rawdata_real/
 rawdata_test/
+.snakemake/
