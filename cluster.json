@@ -43,5 +43,29 @@
     "run_fastq_clean_stats": {
         "time": "4:00:00",
         "threads": "1"
+    },
+    "run_FastqToSam": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_MarkIlluminaAdapters": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_SamToFastq": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_bwa_mem": {
+        "time": "4:00:00",
+        "threads": "8"
+    },
+    "run_MarkDuplicates": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_SortSam": {
+        "time": "4:00:00",
+        "threads": "1"
     }
 }
