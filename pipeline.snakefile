@@ -204,7 +204,7 @@ rule run_SamToFastq:
         " CLIPPING_ATTRIBUTE=XT"
         " CLIPPING_ACTION=2"
         " INTERLEAVE=true"
-        " NON_PE=true"
+        " NON_PF=true"
         " TMP_DIR={params.tmp_dir}"
 
 rule run_bwa_mem:
