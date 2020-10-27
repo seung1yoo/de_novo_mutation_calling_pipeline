@@ -116,6 +116,7 @@ rule run_sickle:
         " -f {input.fastq_1} -r {input.fastq_2}"
         " -t sanger -q 20"
         " -l 20 "
+        " -g"
         " -o {output.fastq_1} -p {output.fastq_2}"
         " -s {output.fastq_s}"
 
