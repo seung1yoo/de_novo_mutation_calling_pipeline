@@ -3,7 +3,7 @@ workdir: /BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline
 reference:
   genome_fasta: reference/Homo_sapiens_assembly38.fasta
   known_site_1: reference/Homo_sapiens_assembly38.dbsnp138.vcf
-  known_site_2: Mills_and_1000G_gold_standard.indels.hg38.vcf
+  known_site_2: reference/Mills_and_1000G_gold_standard.indels.hg38.vcf
 
 samples:
   sample_K-ABC-00002:
