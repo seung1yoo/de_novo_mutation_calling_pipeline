@@ -340,7 +340,7 @@ rule run_BaseRecalibrator:
         log_out="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.BaseRecalibrator.log.out",
     shell:
         "gatk BaseRecalibrator"
-        " -I {input.sorted_bam}"
+        " -I {input.final_bam}"
         " -R {config[reference][genome_fasta]}"
         " --known-sites {config[reference][known_site_1]}"
         " --known-sites {config[reference][known_site_2]}"
@@ -360,7 +360,7 @@ rule run_ApplyBQSR:
         log_out="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.ApplyBQSR.log.out",
     shell:
         "gatk ApplyBSQR"
-        " -I {input.sorted_bam}"
+        " -I {input.final_bam}"
         " -R {config[reference][genome_fasta]}"
         " --bqsr-recal-file {input.baserecal}"
         " -O {output.baserecal}"
