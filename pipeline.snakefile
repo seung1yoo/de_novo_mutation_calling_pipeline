@@ -42,11 +42,12 @@ def get_outputs(config, samples):
         ls.append('analysis/SamToFastq/{0}/{0}.interleave.fq'.format(sample))
 
         ls.append('analysis/bwa_mem/{0}/{0}.mapped.bam'.format(sample))
+        ls.append('analysis/bwa_mem/{0}/{0}.mapped.sorted.bam'.format(sample))
 
         ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.bam'.format(sample))
+        ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.sorted.bam'.format(sample))
         ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.txt'.format(sample))
 
-        ls.append('analysis/SortSam/{0}/{0}.sorted.bam'.format(sample))
 
     return ls
 
@@ -225,9 +226,22 @@ rule run_bwa_mem:
         " {params.idxbase}"
         " {input.interleave_fq}"
 
-rule run_MarkDuplicates:
+rule run_SortSam:
     input:
         mapped_bam="analysis/bwa_mem/{sample}/{sample}.mapped.bam",
+    output:
+        sorted_bam="analysis/bwa_mem/{sample}/{sample}.mapped.sorted.bam",
+    wildcard_constraints:
+        sample="[^/]+"
+    shell:
+        "picard SortSam"
+        " I={input.dedup_bam}"
+        " O={output.sorted_bam}"
+        " SORT_ORDER=coordinate"
+
+rule run_MarkDuplicates:
+    input:
+        mapped_bam="analysis/bwa_mem/{sample}/{sample}.mapped.sorted.bam",
     output:
         dedup_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.bam",
         dedup_txt="analysis/MarkDuplicates/{sample}/{sample}.dedup.txt",
@@ -243,10 +257,9 @@ rule run_MarkDuplicates:
         " INPUT={input.mapped_bam}"
         " OUTPUT={output.dedup_bam}"
         " METRICS_FILE={output.dedup_txt}"
-        #" OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500"
+        " OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500"
         " CREATE_INDEX=true"
         " CREATE_MD5_FILE=true"
-        #" ASSUME_SORTED=true"
         " REMOVE_SEQUENCING_DUPLICATES=true"
         " TMP_DIR={params.tmp_dir}"
         " 2> {params.log_err} 1> {params.log_out}"
@@ -255,7 +268,7 @@ rule run_SortSam:
     input:
         dedup_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.bam",
     output:
-        sorted_bam="analysis/SortSam/{sample}/{sample}.sorted.bam",
+        sorted_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.sorted.bam",
     wildcard_constraints:
         sample="[^/]+"
     shell:
