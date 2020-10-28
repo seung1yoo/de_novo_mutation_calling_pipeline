@@ -21,7 +21,7 @@ def get_outputs(config, samples):
     ls.append('{0}.pac'.format(config['reference']['genome_fasta']))
     ls.append('{0}.sa'.format(config['reference']['genome_fasta']))
     ls.append('{0}.fai'.format(config['reference']['genome_fasta']))
-    ls.append('{0}.dict'.format(config['reference']['genome_fasta']))
+    ls.append('{0}.dict'.format(config['reference']['genome_fasta'].rstrip('.fasta')))
 
     for sample in samples:
         ls.append('analysis/fastqc/{0}/{0}_1_fastqc.zip'.format(sample))
@@ -82,7 +82,7 @@ rule prep_ref_genome_dict:
     input:
         genome_fasta = config['reference']['genome_fasta']
     output:
-        genome_dict = '{0}.dict'.format(config['reference']['genome_fasta'])
+        genome_dict = '{0}.dict'.format(config['reference']['genome_fasta'].rstrip('.fasta'))
     shell:
         "picard CreateSequenceDictionary"
         " --REFERENCE {input.genome_fasta}"
