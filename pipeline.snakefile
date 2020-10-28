@@ -235,7 +235,7 @@ rule run_SortSam_mapped:
         sample="[^/]+"
     shell:
         "picard SortSam"
-        " I={input.dedup_bam}"
+        " I={input.mapped_bam}"
         " O={output.sorted_bam}"
         " SORT_ORDER=coordinate"
 
