@@ -47,6 +47,7 @@ def get_outputs(config, samples):
         ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.bam'.format(sample))
         ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.sorted.bam'.format(sample))
         ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.txt'.format(sample))
+        ls.append('analysis/MarkDuplicates/{0}/{0}.final.bam'.format(sample))
 
         ls.append('analysis/RecalibrateBaseQualityScores/{0}/{0}.baserecalibrator_data.table'.format(sample))
         ls.append('analysis/RecalibrateBaseQualityScores/{0}/{0}.BQSR.bam'.format(sample))
@@ -305,9 +306,30 @@ rule run_SortSam_dedup:
         " SORT_ORDER=coordinate"
         " 2> {params.log_err} 1> {params.log_out}"
 
-rule run_BaseRecalibrator:
+rule run_AddOrReplaceReadGroups:
     input:
         sorted_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.sorted.bam",
+    output:
+        final_bam="analysis/MarkDuplicates/{sample}/{sample}.final.bam",
+    wildcard_constraints:
+        sample="[^/]+"
+    params:
+        sample_name="{sample}"
+        log_err="analysis/MarkDuplicates/{sample}/{sample}.AddOrReplaceReadGroups.log.err",
+        log_out="analysis/MarkDuplicates/{sample}/{sample}.AddOrReplaceReadGroups.log.out",
+    shell:
+        "picard AddOrReplaceReadGroups"
+        " --INPUT {input.sorted_bam}"
+        " --OUTPUT {output.final_bam}"
+        " --RGLB lib1"
+        " --RGPL ILLUMINA"
+        " --RGPU unit1"
+        " --RGSM {params.sample_name}"
+        " 2> {params.log_err} 1> {params.log_out}"
+
+rule run_BaseRecalibrator:
+    input:
+        final_bam="analysis/MarkDuplicates/{sample}/{sample}.final.bam",
         genome_dict = '{0}.dict'.format(config['reference']['genome_fasta'].rstrip('.fasta'))
     output:
         baserecal="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.baserecalibrator_data.table"
@@ -327,7 +349,7 @@ rule run_BaseRecalibrator:
 
 rule run_ApplyBQSR:
     input:
-        sorted_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.sorted.bam",
+        final_bam="analysis/MarkDuplicates/{sample}/{sample}.final.bam",
         baserecal="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.baserecalibrator_data.table"
     output:
         bqsr_bam="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.BQSR.bam"

@@ -72,6 +72,10 @@
         "time": "4:00:00",
         "threads": "1"
     },
+    "run_AddOrReplaceReadGroups": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
     "run_BaseRecalibrator": {
         "time": "4:00:00",
         "threads": "1"
