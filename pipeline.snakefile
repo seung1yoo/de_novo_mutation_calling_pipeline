@@ -226,7 +226,7 @@ rule run_bwa_mem:
         " {params.idxbase}"
         " {input.interleave_fq}"
 
-rule run_SortSam:
+rule run_SortSam_mapped:
     input:
         mapped_bam="analysis/bwa_mem/{sample}/{sample}.mapped.bam",
     output:
@@ -264,7 +264,7 @@ rule run_MarkDuplicates:
         " TMP_DIR={params.tmp_dir}"
         " 2> {params.log_err} 1> {params.log_out}"
 
-rule run_SortSam:
+rule run_SortSam_dedup:
     input:
         dedup_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.bam",
     output:

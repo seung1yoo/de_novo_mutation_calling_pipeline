@@ -60,11 +60,15 @@
         "time": "4:00:00",
         "threads": "8"
     },
+    "run_SortSam_mapped": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
     "run_MarkDuplicates": {
         "time": "4:00:00",
         "threads": "1"
     },
-    "run_SortSam": {
+    "run_SortSam_dedup": {
         "time": "4:00:00",
         "threads": "1"
     }
