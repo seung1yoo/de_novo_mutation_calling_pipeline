@@ -318,7 +318,7 @@ rule run_BaseRecalibrator:
     shell:
         "gatk BaseRecalibrator"
         " -I {input.sorted_bam}"
-        " -R config[reference][genome_fasta]"
+        " -R {config[reference][genome_fasta]}"
         " --known-sites {config[reference][known_site_1]}"
         " --known-sites {config[reference][known_site_2]}"
         " -O {output.baserecal}"
@@ -338,7 +338,7 @@ rule run_ApplyBQSR:
     shell:
         "gatk ApplyBSQR"
         " -I {input.sorted_bam}"
-        " -R config[reference][genome_fasta]"
+        " -R {config[reference][genome_fasta]}"
         " --bqsr-recal-file {input.baserecal}"
         " -O {output.baserecal}"
         " 2> {params.log_err} 1> {params.log_out}"
@@ -357,7 +357,7 @@ rule run_HaplotypeCaller:
     shell:
         "gatk HaplotypeCaller"
         " -I {input.bqsr_bam}"
-        " -R config[reference][genome_fasta]"
+        " -R {config[reference][genome_fasta]}"
         " -O {output.gvcf}"
         " -ERC GVCF"
         " --native-pair-hmm-threads {threads}"
