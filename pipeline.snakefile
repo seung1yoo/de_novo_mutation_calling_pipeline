@@ -242,7 +242,7 @@ rule run_MarkDuplicates:
         " METRICS_FILE={output.dedup_txt}"
         " OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500"
         " CREATE_INDEX=true"
-        " ASSUME_SORT_ORDER=unsorted"
+        " ASSUME_SORT_ORDER=coordinate"
         " TMP_DIR={params.tmp_dir}"
 
 rule run_SortSam:
