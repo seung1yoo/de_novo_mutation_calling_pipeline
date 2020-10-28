@@ -243,7 +243,7 @@ rule run_MarkDuplicates:
         " INPUT={input.mapped_bam}"
         " OUTPUT={output.dedup_bam}"
         " METRICS_FILE={output.dedup_txt}"
-        " OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500"
+        #" OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500"
         " CREATE_INDEX=true"
         " CREATE_MD5_FILE=true"
         #" ASSUME_SORTED=true"
