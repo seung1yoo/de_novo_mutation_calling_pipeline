@@ -71,5 +71,17 @@
     "run_SortSam_dedup": {
         "time": "4:00:00",
         "threads": "1"
+    },
+    "run_BaseRecalibrator": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_ApplyBQSR": {
+        "time": "4:00:00",
+        "threads": "1"
+    },
+    "run_HaplotypeCaller": {
+        "time": "4:00:00",
+        "threads": "8"
     }
 }

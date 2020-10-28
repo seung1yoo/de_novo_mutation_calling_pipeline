@@ -48,6 +48,10 @@ def get_outputs(config, samples):
         ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.sorted.bam'.format(sample))
         ls.append('analysis/MarkDuplicates/{0}/{0}.dedup.txt'.format(sample))
 
+        ls.append('analysis/RecalibrateBaseQualityScores/{0}/{0}.baserecalibrator_data.table'.format(sample))
+        ls.append('analysis/RecalibrateBaseQualityScores/{0}/{0}.BQSR.bam'.format(sample))
+
+        ls.append('analysis/HaplotypeCaller/{0}/{0}.g.vcf.gz'.format(sample))
 
     return ls
 
@@ -126,6 +130,9 @@ rule run_sickle:
         fastq_s="analysis/sickle/{sample}/{sample}_se.fastq.gz",
     wildcard_constraints:
         sample="[^/]+"
+    params:
+        log_err="analysis/sickle/{sample}/{sample}.log.err",
+        log_out="analysis/sickle/{sample}/{sample}.log.out",
     shell:
         "sickle pe"
         " -f {input.fastq_1} -r {input.fastq_2}"
@@ -134,6 +141,7 @@ rule run_sickle:
         " -g"
         " -o {output.fastq_1} -p {output.fastq_2}"
         " -s {output.fastq_s}"
+        " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_fastq_clean_stats:
     input:
@@ -160,6 +168,8 @@ rule run_FastqToSam:
         sample="[^/]+"
     params:
         sample="{sample}",
+        log_err="analysis/FastqToSam/{sample}/{sample}.log.err",
+        log_out="analysis/FastqToSam/{sample}/{sample}.log.out",
     shell:
         "picard FastqToSam"
         " FASTQ={input.fastq_1}"
@@ -171,6 +181,7 @@ rule run_FastqToSam:
         #" PLATFORM_UNIT="
         " PLATFORM=ILLUMINA"
         " SEQUENCING_CENTER=TheragenBio"
+        " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_MarkIlluminaAdapters:
     input:
@@ -181,13 +192,16 @@ rule run_MarkIlluminaAdapters:
     wildcard_constraints:
         sample="[^/]+"
     params:
-        tmp_dir="analysis/MarkIlluminaAdapters/{sample}/tmp"
+        tmp_dir="analysis/MarkIlluminaAdapters/{sample}/tmp",
+        log_err="analysis/MarkIlluminaAdapters/{sample}/{sample}.log.err",
+        log_out="analysis/MarkIlluminaAdapters/{sample}/{sample}.log.out",
     shell:
         "picard MarkIlluminaAdapters"
         " I={input.unmapped_bam}"
         " O={output.marked_bam}"
         " M={output.marked_txt}"
         " TMP_DIR={params.tmp_dir}"
+        " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_SamToFastq:
     input:
@@ -197,7 +211,9 @@ rule run_SamToFastq:
     wildcard_constraints:
         sample="[^/]+"
     params:
-        tmp_dir="analysis/SamToFastq/{sample}/tmp"
+        tmp_dir="analysis/SamToFastq/{sample}/tmp",
+        log_err="analysis/SamToFastq/{sample}/{sample}.log.err",
+        log_out="analysis/SamToFastq/{sample}/{sample}.log.out",
     shell:
         "picard SamToFastq"
         " I={input.marked_bam}"
@@ -207,6 +223,7 @@ rule run_SamToFastq:
         " INTERLEAVE=true"
         " NON_PF=true"
         " TMP_DIR={params.tmp_dir}"
+        " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_bwa_mem:
     input:
@@ -217,7 +234,9 @@ rule run_bwa_mem:
         sample="[^/]+"
     threads: 8
     params:
-        idxbase=config["reference"]["genome_fasta"]
+        idxbase=config["reference"]["genome_fasta"],
+        log_err="analysis/bwa_mem/{sample}/{sample}.log.err",
+        log_out="analysis/bwa_mem/{sample}/{sample}.log.out",
     shell:
         "bwa mem"
         " -M -t {threads}"
@@ -225,6 +244,7 @@ rule run_bwa_mem:
         " -o {output.mapped_bam}"
         " {params.idxbase}"
         " {input.interleave_fq}"
+        " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_SortSam_mapped:
     input:
@@ -233,11 +253,15 @@ rule run_SortSam_mapped:
         sorted_bam="analysis/bwa_mem/{sample}/{sample}.mapped.sorted.bam",
     wildcard_constraints:
         sample="[^/]+"
+    params:
+        log_err="analysis/bwa_mem/{sample}/{sample}.SortSam.log.err",
+        log_out="analysis/bwa_mem/{sample}/{sample}.SortSam.log.out",
     shell:
         "picard SortSam"
         " I={input.mapped_bam}"
         " O={output.sorted_bam}"
         " SORT_ORDER=coordinate"
+        " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_MarkDuplicates:
     input:
@@ -271,11 +295,75 @@ rule run_SortSam_dedup:
         sorted_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.sorted.bam",
     wildcard_constraints:
         sample="[^/]+"
+    params:
+        log_err="analysis/MarkDuplicates/{sample}/{sample}.SortSam.log.err",
+        log_out="analysis/MarkDuplicates/{sample}/{sample}.SortSam.log.out",
     shell:
         "picard SortSam"
         " I={input.dedup_bam}"
         " O={output.sorted_bam}"
         " SORT_ORDER=coordinate"
+        " 2> {params.log_err} 1> {params.log_out}"
+
+rule run_BaseRecalibrator:
+    input:
+        sorted_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.sorted.bam",
+    output:
+        baserecal="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.baserecalibrator_data.table"
+    wildcard_constraints:
+        sample="[^/]+"
+    params:
+        log_err="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.BaseRecalibrator.log.err",
+        log_out="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.BaseRecalibrator.log.out",
+    shell:
+        "gatk BaseRecalibrator"
+        " -I {input.sorted_bam}"
+        " -R config[reference][genome_fasta]"
+        " --known-sites {config[reference][known_site_1]}"
+        " --known-sites {config[reference][known_site_2]}"
+        " -O {output.baserecal}"
+        " 2> {params.log_err} 1> {params.log_out}"
+
+rule run_ApplyBQSR:
+    input:
+        sorted_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.sorted.bam",
+        baserecal="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.baserecalibrator_data.table"
+    output:
+        bqsr_bam="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.BQSR.bam"
+    wildcard_constraints:
+        sample="[^/]+"
+    params:
+        log_err="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.ApplyBQSR.log.err",
+        log_out="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.ApplyBQSR.log.out",
+    shell:
+        "gatk ApplyBSQR"
+        " -I {input.sorted_bam}"
+        " -R config[reference][genome_fasta]"
+        " --bqsr-recal-file {input.baserecal}"
+        " -O {output.baserecal}"
+        " 2> {params.log_err} 1> {params.log_out}"
+
+rule run_HaplotypeCaller:
+    input:
+        bqsr_bam="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.BQSR.bam"
+    output:
+        gvcf="analysis/HaplotypeCaller/{sample}/{sample}.g.vcf.gz"
+    wildcard_constraints:
+        sample="[^/]+"
+    threads: 8
+    params:
+        log_err="analysis/HaplotypeCaller/{sample}/{sample}.log.err",
+        log_out="analysis/HaplotypeCaller/{sample}/{sample}.log.out",
+    shell:
+        "gatk HaplotypeCaller"
+        " -I {input.bqsr_bam}"
+        " -R config[reference][genome_fasta]"
+        " -O {output.gvcf}"
+        " -ERC GVCF"
+        " --native-pair-hmm-threads {threads}"
+        " 2> {params.log_err} 1> {params.log_out}"
+
+
 
 
 
