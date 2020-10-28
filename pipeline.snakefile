@@ -308,7 +308,6 @@ rule run_SortSam_dedup:
 rule run_BaseRecalibrator:
     input:
         sorted_bam="analysis/MarkDuplicates/{sample}/{sample}.dedup.sorted.bam",
-        genome_dict = '{0}.dict'.format(config['reference']['genome_fasta'])
     output:
         baserecal="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.baserecalibrator_data.table"
     wildcard_constraints:
@@ -320,7 +319,6 @@ rule run_BaseRecalibrator:
         "gatk BaseRecalibrator"
         " -I {input.sorted_bam}"
         " -R {config[reference][genome_fasta]}"
-        " --sequence-dictionary {input.genome_dict}"
         " --known-sites {config[reference][known_site_1]}"
         " --known-sites {config[reference][known_site_2]}"
         " -O {output.baserecal}"
