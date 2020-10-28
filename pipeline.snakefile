@@ -234,16 +234,22 @@ rule run_MarkDuplicates:
     wildcard_constraints:
         sample="[^/]+"
     params:
-        tmp_dir="analysis/MarkDuplicates/{sample}/tmp"
+        tmp_dir="analysis/MarkDuplicates/{sample}/tmp",
+        log_err="analysis/MarkDuplicates/{sample}/{sample}.log.err",
+        log_out="analysis/MarkDuplicates/{sample}/{sample}.log.out",
     shell:
         "picard MarkDuplicates"
+        " -Xmx50g"
         " INPUT={input.mapped_bam}"
         " OUTPUT={output.dedup_bam}"
         " METRICS_FILE={output.dedup_txt}"
         " OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500"
         " CREATE_INDEX=true"
-        " ASSUME_SORTED=true"
+        " CREATE_MD5_FILE=true"
+        #" ASSUME_SORTED=true"
+        " REMOVE_SEQUENCING_DUPLICATES=true"
         " TMP_DIR={params.tmp_dir}"
+        " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_SortSam:
     input:
