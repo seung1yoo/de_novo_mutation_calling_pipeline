@@ -314,7 +314,7 @@ rule run_AddOrReplaceReadGroups:
     wildcard_constraints:
         sample="[^/]+"
     params:
-        sample_name="{sample}"
+        sample_name="{sample}",
         log_err="analysis/MarkDuplicates/{sample}/{sample}.AddOrReplaceReadGroups.log.err",
         log_out="analysis/MarkDuplicates/{sample}/{sample}.AddOrReplaceReadGroups.log.out",
     shell:
