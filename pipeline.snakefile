@@ -363,7 +363,7 @@ rule run_ApplyBQSR:
         " -I {input.final_bam}"
         " -R {config[reference][genome_fasta]}"
         " --bqsr-recal-file {input.baserecal}"
-        " -O {output.baserecal}"
+        " -O {output.bqsr_bam}"
         " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_HaplotypeCaller:
