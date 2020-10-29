@@ -359,7 +359,7 @@ rule run_ApplyBQSR:
         log_err="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.ApplyBQSR.log.err",
         log_out="analysis/RecalibrateBaseQualityScores/{sample}/{sample}.ApplyBQSR.log.out",
     shell:
-        "gatk ApplyBSQR"
+        "gatk ApplyBQSR"
         " -I {input.final_bam}"
         " -R {config[reference][genome_fasta]}"
         " --bqsr-recal-file {input.baserecal}"
