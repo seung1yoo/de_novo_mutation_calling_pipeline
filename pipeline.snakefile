@@ -402,5 +402,3 @@ rule symlink_upload:
         "ln -s {input.gvcf} {output.gvcf}"
 
 
-
-

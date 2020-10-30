@@ -12,3 +12,4 @@ snakemake \
     --keep-going \
     --cluster-config cluster.json \
     --cluster "qsub -V -o {config[workdir]}/{cluster.output} -e {config[workdir]}/{cluster.error} -pe smp {cluster.threads} -N {cluster.jobName} -S /bin/bash -q all.q"
+
