@@ -54,6 +54,10 @@ def get_outputs(config, samples):
 
         ls.append('analysis/HaplotypeCaller/{0}/{0}.g.vcf.gz'.format(sample))
 
+
+        ls.append("analysis/upload/{0}/{0}.final.bam".format(sample)))
+        ls.append("analysis/upload/{0}/{0}.g.vcf.gz".format(sample)))
+
     return ls
 
 rule all:
@@ -386,6 +390,16 @@ rule run_HaplotypeCaller:
         " --native-pair-hmm-threads {threads}"
         " 2> {params.log_err} 1> {params.log_out}"
 
+rule symlink_upload:
+    input:
+        final_bam=os.path.join(config["workdir"], "analysis/MarkDuplicates/{sample}/{sample}.final.bam"),
+        gvcf=os.path.join(config["workdir"], "analysis/HaplotypeCaller/{sample}/{sample}.g.vcf.gz")
+    output:
+        final_bam=os.path.join(config["workdir"], "analysis/upload/{sample}/{sample}.final.bam"),
+        gvcf=os.path.join(config["workdir"], "analysis/upload/{sample}/{sample}.g.vcf.gz")
+    shell:
+        "ln -s {input.final_bam} {output.final_bam} && "
+        "ln -s {input.gvcf} {output.gvcf}"
 
 
 
