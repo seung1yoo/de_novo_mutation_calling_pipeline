@@ -55,8 +55,8 @@ def get_outputs(config, samples):
         ls.append('analysis/HaplotypeCaller/{0}/{0}.g.vcf.gz'.format(sample))
 
 
-        ls.append("analysis/upload/{0}/{0}.final.bam".format(sample)))
-        ls.append("analysis/upload/{0}/{0}.g.vcf.gz".format(sample)))
+        ls.append("analysis/upload/{0}/{0}.final.bam".format(sample))
+        ls.append("analysis/upload/{0}/{0}.g.vcf.gz".format(sample))
 
     return ls
 
@@ -392,13 +392,15 @@ rule run_HaplotypeCaller:
 
 rule symlink_upload:
     input:
-        final_bam=os.path.join(config["workdir"], "analysis/MarkDuplicates/{sample}/{sample}.final.bam"),
-        gvcf=os.path.join(config["workdir"], "analysis/HaplotypeCaller/{sample}/{sample}.g.vcf.gz")
+        final_bam="analysis/MarkDuplicates/{sample}/{sample}.final.bam",
+        gvcf="analysis/HaplotypeCaller/{sample}/{sample}.g.vcf.gz"
     output:
-        final_bam=os.path.join(config["workdir"], "analysis/upload/{sample}/{sample}.final.bam"),
-        gvcf=os.path.join(config["workdir"], "analysis/upload/{sample}/{sample}.g.vcf.gz")
+        final_bam="analysis/upload/{sample}/{sample}.final.bam",
+        gvcf="analysis/upload/{sample}/{sample}.g.vcf.gz"
+    params:
+        wkdir=os.path.abspath(config["workdir"])
     shell:
-        "ln -s {input.final_bam} {output.final_bam} && "
-        "ln -s {input.gvcf} {output.gvcf}"
+        "ln -s {parmas.wkdir}/{input.final_bam} {parmas.wkdir}/{output.final_bam} && "
+        "ln -s {parmas.wkdir}/{input.gvcf} {parmas.wkdir}/{output.gvcf}"
 
 
