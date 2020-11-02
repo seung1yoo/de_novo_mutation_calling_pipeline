@@ -173,6 +173,7 @@ rule run_FastqToSam:
         sample="[^/]+"
     params:
         sample="{sample}",
+        tmp_dir="analysis/FastqToSam/{sample}/tmp",
         log_err="analysis/FastqToSam/{sample}/{sample}.log.err",
         log_out="analysis/FastqToSam/{sample}/{sample}.log.out",
     shell:
@@ -186,6 +187,7 @@ rule run_FastqToSam:
         #" PLATFORM_UNIT="
         " PLATFORM=ILLUMINA"
         " SEQUENCING_CENTER=TheragenBio"
+        " TMP_DIR={params.tmp_dir}"
         " 2> {params.log_err} 1> {params.log_out}"
 
 rule run_MarkIlluminaAdapters:
