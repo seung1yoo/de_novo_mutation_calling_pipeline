@@ -1,5 +1,6 @@
 
-workdir: /BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline
+#workdir: /BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline
+workdir: /data02/project/TBD200742_WGRS_Human_siyoo_202011/de_novo_mutation_calling_pipeline
 reference:
   genome_fasta: reference/Homo_sapiens_assembly38.fasta
   known_site_1: reference/Homo_sapiens_assembly38.dbsnp138.vcf

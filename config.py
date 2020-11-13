@@ -11,7 +11,8 @@ class Config:
     def make_yaml(self):
         outfh = open(self.outfn, 'w')
         print('', file=outfh)
-        print('workdir: /BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline', file=outfh)
+        #print('workdir: /BiO/BioPeople/siyoo/de_novo_mutation_calling_pipeline', file=outfh)
+        print('workdir: /data02/project/TBD200742_WGRS_Human_siyoo_202011/de_novo_mutation_calling_pipeline', file=outfh)
         print('reference:', file=outfh)
         print('  genome_fasta: reference/Homo_sapiens_assembly38.fasta', file=outfh)
         print('  known_site_1: reference/Homo_sapiens_assembly38.dbsnp138.vcf', file=outfh)
