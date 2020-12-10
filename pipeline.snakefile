@@ -53,10 +53,17 @@ def get_outputs(config, samples):
         ls.append('analysis/RecalibrateBaseQualityScores/{0}/{0}.BQSR.bam'.format(sample))
 
         ls.append('analysis/HaplotypeCaller/{0}/{0}.g.vcf.gz'.format(sample))
+        ls.append('analysis/HaplotypeCaller/{0}/{0}.vcf'.format(sample))
+        ls.append('analysis/HaplotypeCaller/{0}/{0}.final.vcf'.format(sample))
 
+        ls.append('analysis/snpeff/{0}/{0}.snpeff.vcf'.format(sample))
+        ls.append('analysis/snpeff/{0}/{0}.snpeff.html'.format(sample))
 
         ls.append("analysis/upload/{0}/{0}.final.bam".format(sample))
         ls.append("analysis/upload/{0}/{0}.g.vcf.gz".format(sample))
+        ls.append("analysis/upload/{0}/{0}.final.vcf".format(sample))
+        ls.append('analysis/upload/{0}/{0}.snpeff.vcf'.format(sample))
+        ls.append('analysis/upload/{0}/{0}.snpeff.html'.format(sample))
 
     return ls
 
@@ -392,17 +399,95 @@ rule run_HaplotypeCaller:
         " --native-pair-hmm-threads {threads}"
         " 2> {params.log_err} 1> {params.log_out}"
 
+rule run_HaplotypeCaller_VCF:
+    input:
+        gvcf="analysis/HaplotypeCaller/{sample}/{sample}.g.vcf.gz"
+        #gvcf="analysis/gatk4/{sample}/{sample}.recal.haplotypecall.g.vcf",
+    output:
+        vcf="analysis/HaplotypeCaller/{sample}/{sample}.vcf",
+        tmp=temp("analysis/HaplotypeCaller/{sample}/temp"),
+        #vcf="analysis/gatk4/{sample}/{sample}.recal.haplotypecall.vcf",
+        #tmp=temp("analysis/gatk4/{sample}/temp"),
+    wildcard_constraints:
+        sample="[^/]+"
+    shell:
+        "mkdir -p {output.tmp} && "
+        "gatk GenotypeGVCFs"
+        " --tmp-dir {output.tmp}"
+        " -R {config[reference][genome_fasta]}"
+        #" --intervals {config[variant_target_bed]}"
+        " -V {input.gvcf} "
+        " -O {output.vcf}"
+
+rule gatk_filter:
+    input:
+        vcf="analysis/HaplotypeCaller/{sample}/{sample}.vcf",
+        #vcf="analysis/gatk4/{sample}/{sample}.recal.haplotypecall.vcf",
+    output:
+        tmp=temp("analysis/HaplotypeCaller/{sample}/temp"),
+        filtvcf="analysis/HaplotypeCaller/{sample}/{sample}.final.vcf",
+    wildcard_constraints:
+        sample="[^/]+"
+    shell:
+        "mkdir -p {output.tmp} && "
+        "gatk VariantFiltration"
+        " --tmp-dir {output.tmp}"
+        " -V {input.vcf}"
+        " -O {output.filtvcf}"
+
+rule AnnotateVCF:
+    input:
+        vcf="analysis/HaplotypeCaller/{sample}/{sample}.final.vcf"
+    output:
+        vcf="analysis/snpeff/{sample}/{sample}.snpeff.vcf",
+        html="analysis/snpeff/{sample}/{sample}.snpeff.html"
+    wildcard_constraints:
+        sample="[^/]+"
+    params:
+        updownstream=2000,
+        sampleid="{sample}"
+    shell:
+        "snpEff -geneId"
+        " -noInteraction"
+        " -noMotif"
+        " -noNextProt"
+        " -no-intergenic"
+        " -ud {params.updownstream}"
+        " -canon"
+        " -c {config[snpeff_config]}"
+        " -v {config[snpeff_db]}"
+        " -s {output.html}"
+        " -o vcf"
+        " {input.vcf} | "
+        "SnpSift varType - | "
+        "SnpSift annotate -a -ID  {config[dbsnp_db]} - | "
+        "SnpSift annotate -a -noID  {config[clinvar_db]} - "
+        " > {output.vcf}"
+        #"SnpSift DbNsfp -db {config[dbnsftp_db]} -f {config[snpeff_annot_columns]} -  | "
+        #"SnpSift annotate -a -noID  {config[cosmic_db]} - | "
+        #"SnpSift annotate -a -noID  {config[gnomad_db]} - | "
+        #"SnpSift annotate -a -noID  {config[krgdb]} - "
+
 rule symlink_upload:
     input:
         final_bam="analysis/MarkDuplicates/{sample}/{sample}.final.bam",
-        gvcf="analysis/HaplotypeCaller/{sample}/{sample}.g.vcf.gz"
+        gvcf="analysis/HaplotypeCaller/{sample}/{sample}.g.vcf.gz",
+        vcf="analysis/HaplotypeCaller/{sample}/{sample}.final.vcf",
+        snpeff_vcf="analysis/snpeff/{sample}/{sample}.snpeff.vcf",
+        snpeff_html="analysis/snpeff/{sample}/{sample}.snpeff.html",
     output:
         final_bam="analysis/upload/{sample}/{sample}.final.bam",
-        gvcf="analysis/upload/{sample}/{sample}.g.vcf.gz"
+        gvcf="analysis/upload/{sample}/{sample}.g.vcf.gz",
+        vcf="analysis/upload/{sample}/{sample}.final.vcf",
+        snpeff_vcf="analysis/upload/{sample}/{sample}.snpeff.vcf",
+        snpeff_html="analysis/upload/{sample}/{sample}.snpeff.html",
     params:
         wkdir=os.path.abspath(config["workdir"])
     shell:
-        "ln -s {parmas.wkdir}/{input.final_bam} {parmas.wkdir}/{output.final_bam} && "
-        "ln -s {parmas.wkdir}/{input.gvcf} {parmas.wkdir}/{output.gvcf}"
+        "ln -s {params.wkdir}/{input.final_bam} {params.wkdir}/{output.final_bam} && "
+        "ln -s {params.wkdir}/{input.gvcf} {params.wkdir}/{output.gvcf} && "
+        "ln -s {params.wkdir}/{input.vcf} {params.wkdir}/{output.vcf} && "
+        "ln -s {params.wkdir}/{input.snpeff_vcf} {params.wkdir}/{output.snpeff_vcf} && "
+        "ln -s {params.wkdir}/{input.snpeff_html} {params.wkdir}/{output.snpeff_html}"
 
 

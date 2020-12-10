@@ -3,4 +3,5 @@ rawdata
 rawdata_real/
 analysis/
 logs/
+tmp/
 .snakemake/

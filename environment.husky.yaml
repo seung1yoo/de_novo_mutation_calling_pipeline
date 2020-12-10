@@ -12,7 +12,7 @@ dependencies:
   - bzip2=1.0.8=h7b6447c_0
   - ca-certificates=2020.10.14=0
   - cairo=1.14.12=h8948797_3
-  - certifi=2020.6.20=py36_0
+  - certifi=2020.6.20=pyhd3eb1b0_3
   - cffi=1.14.3=py36he30daa8_0
   - chardet=3.0.4=py36_1003
   - cryptography=3.1.1=py36h1ba5d50_0
@@ -85,6 +85,7 @@ dependencies:
   - sickle-trim=1.33=hed695b0_5
   - six=1.15.0=py_0
   - snakemake=3.13.3=py36_0
+  - snpeff=5.0=0
   - sqlite=3.33.0=h62c20be_0
   - tk=8.6.10=hbc83047_0
   - urllib3=1.25.11=py_0
@@ -95,4 +96,3 @@ dependencies:
   - zlib=1.2.11=h7b6447c_3
   - zstd=1.4.5=h9ceee32_0
 prefix: /TBI/People/tbi/siyoo/miniconda3/envs/de_novo_mutation_calling_pipeline
-

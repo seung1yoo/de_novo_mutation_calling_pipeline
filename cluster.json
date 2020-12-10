@@ -9,21 +9,21 @@
     },
     "prep_ref_genome_bwa_index": {
         "time": "4:00:00",
-        "threads": "1",
+        "threads": "4",
         "jobName": "{rule}",
         "output" : "logs/{rule}.stdout",
         "error"  : "logs/{rule}.stderr"
     },
     "prep_ref_genome_fai": {
         "time": "4:00:00",
-        "threads": "1",
+        "threads": "4",
         "jobName": "{rule}",
         "output" : "logs/{rule}.stdout",
         "error"  : "logs/{rule}.stderr"
     },
     "prep_ref_genome_dict": {
         "time": "4:00:00",
-        "threads": "1",
+        "threads": "4",
         "jobName": "{rule}",
         "output" : "logs/{rule}.stdout",
         "error"  : "logs/{rule}.stderr"
@@ -34,27 +34,27 @@
     },
     "run_fastq_raw_stats": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_sickle": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_fastq_clean_stats": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_FastqToSam": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_MarkIlluminaAdapters": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_SamToFastq": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_bwa_mem": {
         "time": "4:00:00",
@@ -62,31 +62,43 @@
     },
     "run_SortSam_mapped": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_MarkDuplicates": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "16"
     },
     "run_SortSam_dedup": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_AddOrReplaceReadGroups": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "4"
     },
     "run_BaseRecalibrator": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "16"
     },
     "run_ApplyBQSR": {
         "time": "4:00:00",
-        "threads": "1"
+        "threads": "16"
     },
     "run_HaplotypeCaller": {
         "time": "4:00:00",
-        "threads": "8"
+        "threads": "16"
+    },
+    "run_HaplotypeCaller_VCF": {
+        "time": "4:00:00",
+        "threads": "16"
+    },
+    "gatk_filter": {
+        "time": "4:00:00",
+        "threads": "4"
+    },
+    "AnnotateVCF": {
+        "time": "4:00:00",
+        "threads": "16"
     },
     "symlink_upload": {
         "time": "4:00:00",
