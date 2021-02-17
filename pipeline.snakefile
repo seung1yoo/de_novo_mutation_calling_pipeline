@@ -24,15 +24,15 @@ def get_outputs(config, samples):
     ls.append('{0}.dict'.format(config['reference']['genome_fasta'].rstrip('.fasta')))
 
     for sample in samples:
-        ls.append('analysis/fastqc/{0}/{0}_1_fastqc.zip'.format(sample))
-        ls.append('analysis/fastqc/{0}/{0}_2_fastqc.zip'.format(sample))
+        #ls.append('analysis/fastqc/{0}/{0}_1_fastqc.zip'.format(sample))
+        #ls.append('analysis/fastqc/{0}/{0}_2_fastqc.zip'.format(sample))
 
         ls.append('analysis/sickle/{0}/{0}_R1.fastq.gz'.format(sample))
         ls.append('analysis/sickle/{0}/{0}_R2.fastq.gz'.format(sample))
         ls.append('analysis/sickle/{0}/{0}_se.fastq.gz'.format(sample))
 
-        ls.append('analysis/statistics/{0}/{0}.fastq.raw.stats'.format(sample))
-        ls.append('analysis/statistics/{0}/{0}.fastq.clean.stats'.format(sample))
+        #ls.append('analysis/statistics/{0}/{0}.fastq.raw.stats'.format(sample))
+        #ls.append('analysis/statistics/{0}/{0}.fastq.clean.stats'.format(sample))
 
         ls.append('analysis/FastqToSam/{0}/{0}.unmapped.bam'.format(sample))
 
@@ -100,37 +100,37 @@ rule prep_ref_genome_dict:
         " --REFERENCE {input.genome_fasta}"
         " --OUTPUT {output.genome_dict}"
 
-rule run_fastqc:
-    input:
-        fastq_1=lambda wildcards: config["samples"][wildcards.sample]["fastq_1"],
-        fastq_2=lambda wildcards: config["samples"][wildcards.sample]["fastq_2"]
-    output:
-        fastqc_1="analysis/fastqc/{sample}/{sample}_1_fastqc.zip",
-        fastqc_2="analysis/fastqc/{sample}/{sample}_2_fastqc.zip"
-    wildcard_constraints:
-        sample="[^/]+"
-    params:
-        path="analysis/fastqc/{sample}/"
-    threads: 8
-    shell:
-        "fastqc -t {threads}"
-        " --extract"
-        " -o {params.path} {input.fastq_1} {input.fastq_2}"
+#rule run_fastqc:
+#    input:
+#        fastq_1=lambda wildcards: config["samples"][wildcards.sample]["fastq_1"],
+#        fastq_2=lambda wildcards: config["samples"][wildcards.sample]["fastq_2"]
+#    output:
+#        fastqc_1="analysis/fastqc/{sample}/{sample}_1_fastqc.zip",
+#        fastqc_2="analysis/fastqc/{sample}/{sample}_2_fastqc.zip"
+#    wildcard_constraints:
+#        sample="[^/]+"
+#    params:
+#        path="analysis/fastqc/{sample}/"
+#    threads: 8
+#    shell:
+#        "fastqc -t {threads}"
+#        " --extract"
+#        " -o {params.path} {input.fastq_1} {input.fastq_2}"
 
-rule run_fastq_raw_stats:
-    input:
-        fastq_1=lambda wildcards: config["samples"][wildcards.sample]["fastq_1"],
-        fastq_2=lambda wildcards: config["samples"][wildcards.sample]["fastq_2"]
-    output:
-        stats="analysis/statistics/{sample}/{sample}.fastq.raw.stats"
-    params:
-        outdir="analysis/statistics/{sample}"
-    wildcard_constraints:
-        sample="[^/]+"
-    shell:
-        "mkdir -p {params.outdir} && "
-        "tool/FastqStatExtractFastqGZ.pairedend.py"
-        " {input.fastq_1} {input.fastq_2} {output.stats}"
+#rule run_fastq_raw_stats:
+#    input:
+#        fastq_1=lambda wildcards: config["samples"][wildcards.sample]["fastq_1"],
+#        fastq_2=lambda wildcards: config["samples"][wildcards.sample]["fastq_2"]
+#    output:
+#        stats="analysis/statistics/{sample}/{sample}.fastq.raw.stats"
+#    params:
+#        outdir="analysis/statistics/{sample}"
+#    wildcard_constraints:
+#        sample="[^/]+"
+#    shell:
+#        "mkdir -p {params.outdir} && "
+#        "tool/FastqStatExtractFastqGZ.pairedend.py"
+#        " {input.fastq_1} {input.fastq_2} {output.stats}"
 
 rule run_sickle:
     input:
@@ -155,20 +155,20 @@ rule run_sickle:
         " -s {output.fastq_s}"
         " 2> {params.log_err} 1> {params.log_out}"
 
-rule run_fastq_clean_stats:
-    input:
-        fastq_1="analysis/sickle/{sample}/{sample}_R1.fastq.gz",
-        fastq_2="analysis/sickle/{sample}/{sample}_R2.fastq.gz",
-    output:
-        stats="analysis/statistics/{sample}/{sample}.fastq.clean.stats"
-    params:
-        outdir="analysis/statistics/{sample}"
-    wildcard_constraints:
-        sample="[^/]+"
-    shell:
-        "mkdir -p {params.outdir} && "
-        "tool/FastqStatExtractFastqGZ.pairedend.py"
-        " {input.fastq_1} {input.fastq_2} {output.stats}"
+#rule run_fastq_clean_stats:
+#    input:
+#        fastq_1="analysis/sickle/{sample}/{sample}_R1.fastq.gz",
+#        fastq_2="analysis/sickle/{sample}/{sample}_R2.fastq.gz",
+#    output:
+#        stats="analysis/statistics/{sample}/{sample}.fastq.clean.stats"
+#    params:
+#        outdir="analysis/statistics/{sample}"
+#    wildcard_constraints:
+#        sample="[^/]+"
+#    shell:
+#        "mkdir -p {params.outdir} && "
+#        "tool/FastqStatExtractFastqGZ.pairedend.py"
+#        " {input.fastq_1} {input.fastq_2} {output.stats}"
 
 rule run_FastqToSam:
     input:

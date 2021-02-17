@@ -2,6 +2,8 @@ reference/
 rawdata
 rawdata_real/
 analysis/
+analysis_legacy/
+analysis_TBD200889_10869/
 logs/
 tmp/
 .snakemake/
