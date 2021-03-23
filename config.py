@@ -47,12 +47,15 @@ def main():
     #           'sample_K-CTC-00013', 'sample_K-CTC-00014', 'sample_K-CTC-00015', 'sample_K-CTC-00016',
     #           'sample_K-CTC-00017', 'sample_K-CTC-00018', 'sample_K-CTC-00019', 'sample_K-CTC-00020']
     #rawdata_path = 'rawdata/TBD200889_10869_2531_20201210'
-    samples = ['sample_K-CTC-00021', 'sample_K-CTC-00022', 'sample_K-CTC-00023', 'sample_K-CTC-00024',
-               'sample_K-CTC-00025', 'sample_K-CTC-00026', 'sample_K-CTC-00027', 'sample_K-CTC-00028',
-               'sample_K-CTC-00029', 'sample_K-CTC-00030', 'sample_K-CTC-00031', 'sample_K-CTC-00032',
-               'sample_K-CTC-00033', 'sample_K-CTC-00034', 'sample_K-CTC-00035', 'sample_K-CTC-00036',
-               'sample_K-CTC-00037', 'sample_K-CTC-00038', 'sample_K-CTC-00039']
-    rawdata_path = 'rawdata/TBD201002_11148_2778_20210112'
+    #samples = ['sample_K-CTC-00021', 'sample_K-CTC-00022', 'sample_K-CTC-00023', 'sample_K-CTC-00024',
+    #           'sample_K-CTC-00025', 'sample_K-CTC-00026', 'sample_K-CTC-00027', 'sample_K-CTC-00028',
+    #           'sample_K-CTC-00029', 'sample_K-CTC-00030', 'sample_K-CTC-00031', 'sample_K-CTC-00032',
+    #           'sample_K-CTC-00033', 'sample_K-CTC-00034', 'sample_K-CTC-00035', 'sample_K-CTC-00036',
+    #           'sample_K-CTC-00037', 'sample_K-CTC-00038', 'sample_K-CTC-00039']
+    #rawdata_path = 'rawdata/TBD201002_11148_2778_20210112'
+    #
+    rawdata_path = 'rawdata/TBD210101_11481_20210303'
+    samples = ['sample_K-ABC-00209', 'sample_K-ABC-00278']
 
     outfn = 'config.yaml'
     config = Config(rawdata_path, samples, outfn)

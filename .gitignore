@@ -4,6 +4,12 @@ rawdata_real/
 analysis/
 analysis_legacy/
 analysis_TBD200889_10869/
+analysis_TBD200742_10441/
+analysis_TBD201002_11148/
+analysis_TBD210101_11481/
 logs/
 tmp/
 .snakemake/
+tool/seqan-library-2.0.0/
+tool/SoftSV_1.4.2/
+tool/seqan-library-2.0.0.tar.bz2
